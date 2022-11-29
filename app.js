@@ -2,8 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
-const Sector = require("../../models/Sector");
-const User = require("../../models/User");
+const Sector = require("./models/Sector");
+const User = require("./models/User");
 
 
 const corsOptions = {
