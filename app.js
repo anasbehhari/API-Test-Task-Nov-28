@@ -107,7 +107,7 @@ app.post("/api/user/check", (req, res) => {
 
 
 mongoose
-  .connect(process.env.DBURI, {
+  .connect("mongodb+srv://anasbehhari:Fmo8IKGgaSVmQsRz@saveit.uftsd.mongodb.net/task", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useFindAndModify: true,
