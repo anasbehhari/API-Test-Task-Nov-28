@@ -5,16 +5,20 @@ const cors = require("cors");
 const Sector = require("./models/Sector");
 const User = require("./models/User");
 
+//CORS 
 const corsOptions = {
   origin: "*",
-  credentials: true, //access-control-allow-credentials:true
+  credentials: true, 
   optionSuccessStatus: 200,
 };
+app.use(cors(corsOptions));
 
-app.use(cors(corsOptions)); // Use this after the variable declaration
 
+//DOTENV OR ENV VARIABLES
 require("dotenv").config();
 
+
+//BASIC STUFF
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -22,6 +26,8 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("welcome 😊 !");
 });
+
+//GET ALL SECTORS
 app.get("/api/sectors", (req, res) => {
   Sector.find()
     .then((sectors) => {
@@ -34,6 +40,7 @@ app.get("/api/sectors", (req, res) => {
       });
     });
 });
+//GET ALL USERS
 app.get("/api/users", (req, res) => {
   User.find()
     .then((Users) => {
@@ -46,6 +53,7 @@ app.get("/api/users", (req, res) => {
       });
     });
 });
+//ADD A SECTOR
 app.post("/api/sectors/add", (req, res) => {
   const { body } = req;
   const { name } = body;
@@ -65,6 +73,7 @@ app.post("/api/sectors/add", (req, res) => {
       res.send({ success: false });
     });
 });
+//ADD USER
 app.post("/api/user/add", (req, res) => {
   const { body } = req;
   const { name, sectors, terms } = body;
@@ -87,6 +96,7 @@ app.post("/api/user/add", (req, res) => {
       res.send({ success: false, err });
     });
 });
+//EDIT USER name and sectors
 app.post("/api/user/edit", (req, res) => {
   const { _id, name, sectors } = req.body;
   if (_id) {
@@ -104,6 +114,7 @@ app.post("/api/user/edit", (req, res) => {
     );
   }
 });
+//CHECK IF THE ID PASSED MATCHES WITH SOME OF OUR USERS (SECURITY THING*)
 app.post("/api/user/check", (req, res) => {
   const { _id } = req.body;
   if (_id) {
@@ -120,6 +131,7 @@ app.post("/api/user/check", (req, res) => {
       });
   }
 });
+//DELETE SPECEFIC USER 
 app.post("/api/user/delete", (req, res) => {
   const { _id } = req.body;
   if (_id) {
@@ -137,6 +149,8 @@ app.post("/api/user/delete", (req, res) => {
   }
 });
 
+
+//DB CONNECTION
 mongoose
   .connect(process.env.DBURI, {
     useUnifiedTopology: true,
